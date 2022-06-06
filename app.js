@@ -1,6 +1,7 @@
 const Express=require("express")
 const Mongoose=require("mongoose")
 const Bodyparser=require("body-parser")
+const req = require("express/lib/request")
 var app=Express()
 app.use(Bodyparser.urlencoded({extended:true}))
 app.use(Bodyparser.json())
@@ -115,6 +116,45 @@ app.post("/api/studentsearch",(req,res)=>{
            res.send(data)
        }
    })
+})
+app.post("/api/facultysearch",(req,res)=>{
+    var getFname=req.body
+    console.log(getFname)
+    facultyMoodel.find(getFname,(error,data)=>{
+        if(error){
+            res.send({"status":"error"})
+        }
+        else{
+            res.send(data)
+        }
+    })
+})
+app.post("/api/studentdelete",(req,res)=>{
+    
+    var getId=req.body
+    console.log(getId)
+    studentModel.findByIdAndDelete(getId,(error,data)=>{
+        if(error){
+            res.send({"status":"error"})
+        }
+        else
+        {
+            res.send({"status":"success"})
+        }
+    })
+})
+app.post("/api/facultydelete",(req,res)=>{
+    var getId=req.body
+    console.log(getId)
+    facultyMoodel.findByIdAndDelete(getId,(error,data)=>{
+        if(error){
+            res.send({"status":"error"})
+        }
+        else{
+            res.send({"status":"success"})
+        }
+    })
+
 })
 
 
